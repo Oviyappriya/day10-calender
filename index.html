@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calender</title>
+    <style>
+       #selectdate{
+        color: azure;
+        margin: 0;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border: 2px solid black;
+        background-color:rgb(9, 9, 36);
+       }
+       #date{
+        padding-left: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: 2px solid black;
+        text-decoration: double;
+        font-size: large;
+        font-style:bold;
+       }
+       body{
+        background-color: rgb(62, 62, 87);
+       }
+       img{
+        width: 500px;
+        height: 500px;
+        border: 2px solid black;
+        margin-top: 10px;
+        margin-left: 30px;
+        
+       }
+       button:hover{
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: 2px solid black;
+        margin-left: 5px;
+        background-color: rgb(96, 194, 194);
+        color: white;
+        }
+      
+    </style>
+</head>
+<body>
+    <form id="dateForm">
+        <div id='selectdate'>
+            <form >Select Date:</form>
+            <br />
+            <input type="date"id="date" min="2024-01-01" max="2025-12-31" required>
+            <button>Get Calender</button>
+           
+        </div>
+    </form>    
+            <img src=""  alt="" id="dayImg" hidden>
+            <script>
+            const dateForm=document.querySelector('#dateForm');
+            const dayImg=document.getElementById('dayImg')
+            dateForm.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            const inputDate=e.target[0].value;
+            processesDate(inputDate);
+});
+
+        function processesDate(date){
+            const mydate=date ? new Date(date) : new Date()
+            console.log(mydate);
+            const result=mydate.toLocaleDateString("en-In",{
+            year:"numeric",
+            day:"numeric",
+            month:"2-digit",
+})
+           const formatdate=result.replaceAll('/','-')
+//console.log(formatdate)
+           let changeFormat=()=>{
+           let dateArray=formatdate.split('-')
+           let newFormat=`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`
+           console.log(newFormat)
+//https://www.prokerala.com/general/calendar/imgs/daily/2024-04-09.png
+           const formatUrl=`https://www.prokerala.com/general/calendar/imgs/daily/${newFormat}.png`
+           dayImg.src=formatUrl;
+           dayImg.alt=newFormat;
+           dayImg.removeAttribute('hidden');
+//console.log(formatUrl)
+}
+changeFormat()
+}
+processesDate();
+           </script>
+</body>
+</html>
